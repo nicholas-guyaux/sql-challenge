@@ -1,15 +1,14 @@
-DROP DATABASE IF EXISTS sql-challenge;
-CREATE DATABASE sql-challenge;
+DROP DATABASE IF EXISTS sqlChallenge;
+CREATE DATABASE sqlChallenge;
 
-\c sql-challenge;
+\c sqlChallenge;
 
-CREATE TABLE pups (
+CREATE TABLE users (
   ID SERIAL PRIMARY KEY,
   name VARCHAR,
-  breed VARCHAR,
-  age INTEGER,
-  sex VARCHAR
+  email VARCHAR,
+  password VARCHAR
 );
 
-INSERT INTO pups (name, breed, age, sex)
-  VALUES ('Tyler', 'Retrieved', 3, 'M');
+INSERT INTO users (name, email, password)
+  VALUES ('Nick', 'nick@demo.com', 'bobisgreat');
