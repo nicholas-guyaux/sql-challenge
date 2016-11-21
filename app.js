@@ -1,8 +1,8 @@
 var express = require('express');
-var db = pgp('postgres://localhost:5432/generator');
-var pgp = require('pg-promise')();
 var app = express();
 var bodyParser = require('body-parser');
+var pgp = require('pg-promise')();
+var db = pgp('postgres://localhost:5432/sqlChallenge');
 
 // this is to serve the css and js from the public folder to your app
 // it's a little magical, but essentially you put files in there and link
@@ -32,44 +32,44 @@ app.use( function( req, res, next ) {
   next();
 });
 
-// gettting all the users
+// gettting all the blogs
 app.get('/', function(req, res, next){
-  db.any('SELECT * FROM users')
+  db.any('SELECT * FROM blogs')
     .then(function(data){
-      return res.render('index', {data: data})
+      return res.render('index', {blogs: data})
     })
     .catch(function(err){
       return next(err);
     });
 });
 
-//show user
-app.get('/users/:id/', function(req, res, next){
+//show blog
+app.get('/blogs/:id/', function(req, res, next){
   var id = parseInt(req.params.id);
-  db.one('select * from users where id = $1', id)
-    .then(function (user) {
-      res.render('show', {user: user})
+  db.one('select * from blogs where id = $1', id)
+    .then(function (blog) {
+      res.render('show', {blog: blog})
     })
     .catch(function (err) {
       return next(err);
     });
 });
 
-// edit users
-app.get('/users/:id/edit', function(req, res, next){
+// edit blogs
+app.get('/blogs/:id/edit', function(req, res, next){
   var id = parseInt(req.params.id);
-  db.one('select * from users where id = $1', id)
-    .then(function (data) {
-      res.render('edit', {user: user})
+  db.one('select * from blogs where id = $1', id)
+    .then(function (blog) {
+      res.render('edit', {blog: blog})
     })
     .catch(function (err) {
       return next(err);
     });
 });
 
-app.post('/users/:id/edit', function(req, res, next){
-  db.none('update users set name=$1, email=$2, password=$3 where id=$4',
-    [req.body.name, req.body.email, req.body.password, parseInt(req.params.id)])
+app.post('/blogs/:id/edit', function(req, res, next){
+  db.none('update blogs set title=$1, date=$2, entry=$3 where id=$4',
+    [req.body.title, req.body.date, req.body.entry, parseInt(req.params.id)])
     .then(function () {
       res.redirect('/');
     })
@@ -78,14 +78,14 @@ app.post('/users/:id/edit', function(req, res, next){
     });
 });
 
-//add new user
-app.get('/users/new', function(req, res, next){
+//add new blog
+app.get('/blogs/new', function(req, res, next){
   res.render('new');
 });
 
-app.post('users/new', function(req, res, next){
-  db.none('insert into users(name, email, password)' +
-      'values(${name}, ${email}, ${password})',
+app.post('blogs/new', function(req, res, next){
+  db.none('insert into blogs(title, date, entry)' +
+      'values(${title}, ${date}, ${entry})',
     req.body)
     .then(function() {
       res.redirect('/');
@@ -94,10 +94,10 @@ app.post('users/new', function(req, res, next){
     });
 });
 
-//delete users
-app.delete('/users/:id', function(req, res, next){
+//delete blogs
+app.delete('/blogs/:id', function(req, res, next){
   var id = parseInt(req.params.id);
-  db.result('delete from users where id = $1', id)
+  db.result('delete from blogs where id = $1', id)
     .then(function (result) {
       res.redirect('/');
     })

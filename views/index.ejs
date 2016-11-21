@@ -6,21 +6,21 @@
   </head>
   <body>
     <div class="container">
-      <h1>Users List</h1>
-      <a href='users/new'>Add User</a>
+      <h1>Blog List</h1>
+      <a href='blogs/new'>Add Blog</a>
       <table>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Password</th>
+          <th>Title</th>
+          <th>Date</th>
+          <th>Entry</th>
         </tr>
-        <% data.forEach( function(user){ %>
+        <% blogs.forEach(function(blog){ %>
           <tr>
-            <td><a href='/users/<%=user.id %>'><%= user.name %></a></td>
-            <td><%= user.email %></td>
-            <td><%= user.password %></td>
-            <td><a href='/users/<%=user.id %>/edit'>Edit</a></td>
-            <td><a href='/users/<%=user.id %>?_method=DELETE'>Delete</a></td>
+            <td><a href='/blogs/<%=blog.id %>'><%= blog.title %></a></td>
+            <td><%= blog.date %></td>
+            <td><%= blog.entry %></td>
+            <td><a href='/blogs/<%=blog.id %>/edit'>Edit</a></td>
+            <td><a href='/blogs/<%=blog.id %>?_method=DELETE'>Delete</a></td>
           </tr>
         <% }); %>
       </table>
