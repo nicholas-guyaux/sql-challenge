@@ -1,7 +1,7 @@
-<h2>Edit Blog Post</h2>
-<form class="" action="users/new" method="post">
-  <input type="text" name="title" placeholder="Enter Title" />
-  <input type="textarea" name="blog" placeholder="Enter Blog" />
-  <input type="text" name="password" placeholder="Enter Password" />
+<h2>Edit Blog Post (<&= user.name %>)</h2>
+<form class="" action="users/<%= user.id %>/edit" method="post">
+  <input type="text" name="title" value=<%= user.name %> placeholder="Enter Title" />
+  <input type="textarea" name="blog" value=<%= user.email %> placeholder="Enter Blog" />
+  <input type="text" name="password" value=<%= user.password %> placeholder="Enter Password" />
   <input type="submit" value="Submit" />
 </form>
