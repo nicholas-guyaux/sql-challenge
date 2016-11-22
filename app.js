@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var pgp = require('pg-promise')();
-var db = pgp('postgres://localhost:5432/blogsdata');
+var db = pgp('postgres://postgres:a@localhost:5432/blog');
 
 // this is to serve the css and js from the public folder to your app
 // it's a little magical, but essentially you put files in there and link
@@ -68,8 +68,8 @@ app.get('/blogs/:id/edit', function(req, res, next){
 });
 
 app.post('/blogs/:id/edit', function(req, res, next){
-  db.none('update blogs set title=$1, date=$2, entry=$3 where id=$4',
-    [req.body.title, req.body.date, req.body.entry, parseInt(req.params.id)])
+  db.none('update blogs set title=$1, blogdate=$2, entry=$3 where id=$4',
+    [req.body.title, req.body.blogdate, req.body.entry, parseInt(req.params.id)])
     .then(function () {
       res.redirect('/');
     })
@@ -83,15 +83,16 @@ app.get('/blogs/new', function(req, res, next){
   res.render('new');
 });
 
-app.post('blogs/new', function(req, res, next){
-  db.none('insert into blogs(title, date, entry)' +
-      'values(${title}, ${date}, ${entry})',
-    req.body)
-    .then(function() {
-      res.redirect('/');
-    })
-    .catch(function(err) {
-    });
+app.post('/blogs/new', function(req, res, next){
+  db.none('insert into blogs(title, blogdate, entry)' +
+     'values(${title}, ${blogdate}, ${entry})',
+   req.body)
+   .then(function () {
+     res.redirect('/');
+   })
+   .catch(function (err) {
+     return next(err);
+   });
 });
 
 //delete blogs

@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS blogsdata;
-CREATE DATABASE blogsdata;
+DROP DATABASE IF EXISTS blog;
+CREATE DATABASE blog;
 
-\c blogsdata;
+\c blog;
 
 CREATE TABLE blogs (
   ID SERIAL PRIMARY KEY,
