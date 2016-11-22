@@ -43,16 +43,21 @@ app.get('/', function(req, res, next){
     });
 });
 
-//show blog
-app.get('/blogs/:id/', function(req, res, next){
-  var id = parseInt(req.params.id);
-  db.one('select * from blogs where id = $1', id)
-    .then(function (blog) {
-      res.render('show', {blog: blog})
-    })
-    .catch(function (err) {
-      return next(err);
-    });
+//add new blog
+app.get('/blogs/new', function(req, res, next){
+  res.render('new');
+});
+
+app.post('/blogs/new', function(req, res, next){
+  db.none('insert into blogs(title, blogdate, entry)' +
+     'values(${title}, ${blogdate}, ${entry})',
+   req.body)
+   .then(function () {
+     res.redirect('/');
+   })
+   .catch(function (err) {
+     return next(err);
+   });
 });
 
 // edit blogs
@@ -78,21 +83,16 @@ app.post('/blogs/:id/edit', function(req, res, next){
     });
 });
 
-//add new blog
-app.get('/blogs/new', function(req, res, next){
-  res.render('new');
-});
-
-app.post('/blogs/new', function(req, res, next){
-  db.none('insert into blogs(title, blogdate, entry)' +
-     'values(${title}, ${blogdate}, ${entry})',
-   req.body)
-   .then(function () {
-     res.redirect('/');
-   })
-   .catch(function (err) {
-     return next(err);
-   });
+//show blog
+app.get('/blogs/:id/', function(req, res, next){
+  var id = parseInt(req.params.id);
+  db.one('select * from blogs where id = $1', id)
+    .then(function (blog) {
+      res.render('show', {blog: blog})
+    })
+    .catch(function (err) {
+      return next(err);
+    });
 });
 
 //delete blogs

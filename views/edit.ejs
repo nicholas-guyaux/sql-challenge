@@ -1,7 +1,7 @@
 <h2>Edit Blog Post (<%= blog.title %>)</h2>
 <form class="" action="/blogs/<%= blog.id %>/edit" method="post">
   <input type="text" name="title" value="<%= blog.title %>" placeholder="Enter Title" />
-  <input type="text" name="blogdate" value="<%= blog.blogdate %>" placeholder="Enter Date" />
-  <textarea name="entry" rows="10" cols="75" placeholder="Blog Entry" ><%= blog.entry %></textarea>
+  <input type="date" name="blogdate" value="<%= blog.blogdate %>" placeholder="Enter Date" />
+  <textarea name="entry" rows="8" cols="48" placeholder="Blog Entry" ><%= blog.entry %></textarea>
   <input type="submit" value="Submit" />
 </form>
