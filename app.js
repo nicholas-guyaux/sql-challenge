@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var pgp = require('pg-promise')();
-var db = pgp('postgres://localhost:5432/sqlChallenge');
+var db = pgp('postgres://localhost:5432/blogsdata');
 
 // this is to serve the css and js from the public folder to your app
 // it's a little magical, but essentially you put files in there and link

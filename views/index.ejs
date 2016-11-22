@@ -17,7 +17,7 @@
         <% blogs.forEach(function(blog){ %>
           <tr>
             <td><a href='/blogs/<%=blog.id %>'><%= blog.title %></a></td>
-            <td><%= blog.date %></td>
+            <td><%= blog.blogdate %></td>
             <td><%= blog.entry %></td>
             <td><a href='/blogs/<%=blog.id %>/edit'>Edit</a></td>
             <td><a href='/blogs/<%=blog.id %>?_method=DELETE'>Delete</a></td>
